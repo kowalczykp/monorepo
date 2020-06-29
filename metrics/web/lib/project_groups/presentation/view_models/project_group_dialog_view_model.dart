@@ -19,7 +19,6 @@ class ProjectGroupDialogViewModel {
     @required this.id,
     @required this.name,
     @required this.selectedProjectIds,
-  })  : assert(id != null),
-        assert(name != null),
+  })  : assert(name != null),
         assert(selectedProjectIds != null);
 }
