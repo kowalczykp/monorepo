@@ -8,13 +8,24 @@ void main() {
     "ProjectGroupSavingErrorMessage",
     () {
       test(
-        "maps the unknown error code to unknown error message",
+        ".message returns null if the given code is null",
+        () {
+          const errorMessage = ProjectGroupFirestoreErrorMessage(null);
+
+          expect(errorMessage.message, isNull);
+        },
+      );
+
+      test(
+        ".message returns an error message if the given error code is not null",
         () {
           const errorMessage =
               ProjectGroupFirestoreErrorMessage(FirestoreErrorCode.unknown);
 
           expect(
-              errorMessage.message, ProjectGroupsStrings.unknownErrorMessage);
+            errorMessage.message,
+            ProjectGroupsStrings.unknownErrorMessage,
+          );
         },
       );
     },
