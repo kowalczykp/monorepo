@@ -72,6 +72,9 @@ class ProjectGroupsNotifier extends ChangeNotifier {
   /// used to limit the displayed data.
   String _projectNameFilter;
 
+  /// Holds the list of current [ProjectModel]s.
+  List<ProjectModel> _projects;
+
   /// Provides an error description that occurred during loading project groups data.
   String get projectGroupsErrorMessage => _projectGroupsErrorMessage?.message;
 
@@ -167,7 +170,7 @@ class ProjectGroupsNotifier extends ChangeNotifier {
       orElse: () => null,
     );
 
-    final projectIds = projectGroup?.projectIds ?? [];
+    final projectIds = List<String>.from(projectGroup?.projectIds ?? []);
 
     _projectCheckboxViewModels = _projectCheckboxViewModels
         .map(
@@ -182,7 +185,7 @@ class ProjectGroupsNotifier extends ChangeNotifier {
     _projectGroupDialogViewModel = ProjectGroupDialogViewModel(
       id: projectGroup?.id,
       name: projectGroup?.name,
-      selectedProjectIds: List<String>.from(projectIds),
+      selectedProjectIds: projectIds,
     );
 
     notifyListeners();
@@ -325,6 +328,7 @@ class ProjectGroupsNotifier extends ChangeNotifier {
     String projectsErrorMessage,
   ]) {
     _projectsErrorMessage = projectsErrorMessage;
+    _projects = projects;
 
     _refreshProjectCheckboxViewModels(projects);
   }
@@ -353,14 +357,22 @@ class ProjectGroupsNotifier extends ChangeNotifier {
     if (newProjectGroups == null) return;
 
     _projectGroups = newProjectGroups;
-    _projectGroupCardViewModels = newProjectGroups
-        .map((project) => ProjectGroupCardViewModel(
-              id: project.id,
-              name: project.name,
-              projectsCount: project.projectIds.length,
-            ))
-        .toList();
+    final projectGroupCardViewModels = <ProjectGroupCardViewModel>[];
 
+    for (final group in newProjectGroups) {
+      final selectedProjectIds = group.projectIds;
+      final currentProjectIds = _projects.map((project) => project.id);
+
+      selectedProjectIds.removeWhere((id) => !currentProjectIds.contains(id));
+
+      projectGroupCardViewModels.add(ProjectGroupCardViewModel(
+        id: group.id,
+        name: group.name,
+        projectsCount: selectedProjectIds.length,
+      ));
+    }
+
+    _projectGroupCardViewModels = projectGroupCardViewModels;
     notifyListeners();
   }
 
