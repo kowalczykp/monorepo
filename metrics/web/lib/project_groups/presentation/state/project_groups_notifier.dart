@@ -203,7 +203,7 @@ class ProjectGroupsNotifier extends ChangeNotifier {
   void toggleProjectCheckedStatus(String projectId) {
     if (projectId == null) return;
 
-    final projectIds = _projectGroupDialogViewModel.selectedProjectIds;
+    final projectIds = _projectGroupDialogViewModel.selectedProjectIds.toList();
     final isChecked = projectIds.contains(projectId);
 
     if (isChecked) {
