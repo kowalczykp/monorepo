@@ -57,60 +57,63 @@ class _ProjectGroupCardState extends State<ProjectGroupCard> {
               _isHovered ? theme.hoverColor : theme.backgroundColor,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text(
-                  widget.projectGroupCardViewModel.name,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: theme.titleStyle,
-                ),
-              ),
-              Text(
-                _projectGroupsCount,
-                style: theme.subtitleStyle,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      widget.projectGroupCardViewModel.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.titleStyle,
+                    ),
+                  ),
+                  Text(
+                    _projectGroupsCount,
+                    style: theme.subtitleStyle,
+                  ),
+                ],
               ),
               if (_isHovered)
-                Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      IconLabelButton(
-                        onPressed: () => _showProjectGroupDialog(context),
-                        borderRadius: _buttonBorderRadius,
-                        iconPadding: _buttonIconPadding,
-                        icon: Image.network(
-                          'icons/edit.svg',
-                          width: _iconBoxSide,
-                          height: _iconBoxSide,
-                          fit: BoxFit.contain,
-                          color: theme.primaryColor,
-                        ),
-                        label: CommonStrings.edit,
-                        labelStyle: TextStyle(
-                          color: theme.primaryColor,
-                        ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    IconLabelButton(
+                      onPressed: () => _showProjectGroupDialog(context),
+                      borderRadius: _buttonBorderRadius,
+                      iconPadding: _buttonIconPadding,
+                      icon: Image.network(
+                        'icons/edit.svg',
+                        width: _iconBoxSide,
+                        height: _iconBoxSide,
+                        fit: BoxFit.contain,
+                        color: theme.primaryColor,
                       ),
-                      IconLabelButton(
-                        onPressed: () => _showProjectGroupDeleteDialog(context),
-                        borderRadius: _buttonBorderRadius,
-                        iconPadding: _buttonIconPadding,
-                        icon: Image.network(
-                          'icons/delete.svg',
-                          width: _iconBoxSide,
-                          height: _iconBoxSide,
-                          fit: BoxFit.contain,
-                          color: theme.accentColor,
-                        ),
-                        label: CommonStrings.delete,
-                        labelStyle: TextStyle(
-                          color: theme.accentColor,
-                        ),
+                      label: CommonStrings.edit,
+                      labelStyle: TextStyle(
+                        color: theme.primaryColor,
                       ),
-                    ],
-                  ),
+                    ),
+                    IconLabelButton(
+                      onPressed: () => _showProjectGroupDeleteDialog(context),
+                      borderRadius: _buttonBorderRadius,
+                      iconPadding: _buttonIconPadding,
+                      icon: Image.network(
+                        'icons/delete.svg',
+                        width: _iconBoxSide,
+                        height: _iconBoxSide,
+                        fit: BoxFit.contain,
+                        color: theme.accentColor,
+                      ),
+                      label: CommonStrings.delete,
+                      labelStyle: TextStyle(
+                        color: theme.accentColor,
+                      ),
+                    ),
+                  ],
                 ),
             ],
           ),
